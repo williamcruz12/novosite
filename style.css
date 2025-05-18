@@ -1,0 +1,94 @@
+
+   html, body {
+   font-family: "Cinzel Decorative", serif;
+    background-color: #FEFAF6 !important;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  h1, h2, h3, h4, h5{
+  color: #6D4C2F !important;
+  font-family: "Cinzel Decorative", serif !important;
+  font-weight: 700 !important;
+  }
+
+   p{
+    text-align: justify;
+    font-size: poppins regular !important;
+    color: #4B5563;
+    font-size: 18px !important;
+   }
+  
+
+/* Estilo para os itens do Dropdown */
+.dropdown-item {
+  color: #343a40 !important;
+}
+
+.dropdown-item:hover {
+  background-color: #e9ecef;
+  color: #000;
+}
+
+/* Estilo para os links principais */
+.nav-link {
+  font-size: 18px;
+  margin-right: 15px;
+  color: #000, im !important;
+}
+
+/* Estilo para a barra de navegação */
+.navbar {
+  border-bottom: 2px solid #dee2e6;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+  
+  .video {
+      height: 400px!important;
+      width: 100%!important;
+      position: relative!important;
+    }
+  
+  .video video {
+    width: 100%!important;
+    height: 100%!important;
+    position: absolute!important;
+    object-fit: cover!important;
+    z-index: 0!important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Efeito de sombra */
+        border-radius: 10px; /* Se quiser bordas arredondadas */
+    }
+  
+  /* h1 video*/
+  .video .caption {
+    z-index: 1!important;
+    position: relative!important;
+    text-align: center!important;
+    color:#ffa500;
+    text-shadow: 0 4px 8px black;
+    margin: auto;
+  }
+  
+  /* Oque fazer  */
+  .zoom-on-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .zoom-on-hover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Animação suave no scroll */
+  [data-aos="fade-up"] {
+    transition: opacity 1s, transform 1s;
+  }
+  [data-aos="fade-right"] {
+    transition: opacity 1s, transform 1s;
+  }
+  [data-aos="fade-left"] {
+    transition: opacity 1s, transform 1s;
+  }
+  

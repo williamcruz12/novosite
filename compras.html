@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja da Laidinha</title>
+
+    <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+   
+    <!-- 2 pagina -->
+<a href="finalizar.html"></a>
+
+  <script type="text/javascript" src="formulario.js"></script>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Font Family -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+  <header id class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="logo.PNG" alt="" width="60px">
+                
+                <h1 class="text-xl font-bold text-gray-800">LAI Store</h1>
+            </div>
+            
+            <div class="hidden md:flex space-x-6">
+                
+                <a href="#produto" class="text-gray-600 hover:text-purple-600">Produtos</a>
+                <a href="#azeite" class="text-gray-600 hover:text-purple-600">Sobre</a>
+                <a href="#contacto" class="text-gray-600 hover:text-purple-600">Contato</a>
+            </div>
+            
+            <!-- Seção: Navbar com Carrinho e Menu Mobile -->
+<div class="flex items-center space-x-4">
+    <div class="relative" id="cart-container">
+        <button id="cartButton" class="text-gray-600 hover:text-purple-600 relative">
+            <i class="fas fa-shopping-cart text-xl"></i>
+            <span id="cartCount" class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        </button>
+        <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg z-50 p-4">
+            <h3 class="font-bold text-gray-800 mb-2">Seu Carrinho</h3>
+            <div id="cartItems" class="max-h-60 overflow-y-auto">
+                <p class="text-gray-500 text-sm">Seu carrinho está vazio</p>
+            </div>
+            <div class="border-t mt-3 pt-3">
+                <p class="text-gray-700 font-medium">Total: <span id="cartTotal">R$ 0,00</span></p>
+                <button id="checkoutButton" class="w-full mt-2 bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700">
+                    Finalizar Compra
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Botão Hamburguer -->
+    <button id="mobileMenuButton" class="md:hidden text-gray-600 p-2 focus:outline-none">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+</div>
+
+<!-- JavaScript para interações -->
+<script>
+    // Toggle cart dropdown
+    const cartButton = document.getElementById('cartButton');
+    const cartDropdown = document.getElementById('cartDropdown');
+    cartButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cartDropdown.classList.toggle('hidden');
+    });
+    // Fechar dropdown ao clicar fora
+    document.addEventListener('click', (e) => {
+        if (!document.getElementById('cart-container').contains(e.target)) {
+            cartDropdown.classList.add('hidden');
+        }
+    });
+
+    // Redirecionar no botão Finalizar Compra
+    const checkoutButton = document.getElementById('checkoutButton');
+    checkoutButton.addEventListener('click', () => {
+        window.location.href = 'finalizar.html';
+    });
+
+    // Toggle mobile menu (exemplo simples, supõe que #mobileMenu existe)
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
+    
+    <!-- Botão Hamburguer -->
+    <button class="md:hidden text-gray-600" onclick="window.location.href='finalizar.html'">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+</div>
+
+    </header>
+
+ <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Produtos Premium para Você</h2>
+            <p class="text-lg md:text-xl mb-6 max-w-2xl mx-auto text-white">Encontre os melhores produtos com qualidade excepcional e preços imbatíveis</p>
+            <div class="flex justify-center space-x-4">
+                <button onclick="window.location='#produto'" class="border border-white px-6 py-2 rounded-md font-medium hover:bg-white hover:text-purple-600">Ver Produtos</button>
+                <button onclick="window.location='#azeite'" class="border border-white px-6 py-2 rounded-md font-medium hover:bg-white hover:text-purple-600">Caracteristicas </button>
+            </div>
+        </div>
+    </section>   
+<body>
+
+      <!-- Products Section -->
+    <section id="produto" class="container mx-auto px-4 py-12">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-800">Nossos Produtos</h2>
+           
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Product 1 -->
+            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                <div class="discount-badge bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">-20%</div>
+                <div class="p-4">
+                    <img src="azeite200.JPG" alt="Azeite extra virgem 5Lt" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h5 class="font-bold text-gray-800 mb-1">Azeite extra virgem 5Lt Premium</h5>
+                    <p class="text-gray-600 text-sm mb-2">
+                      Encaixado com valvula de segurança, ideal para temperar saladas e pratos a seu gosto.
+                    </p>
+                    <div class="flex items-center mb-3">
+
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm line-through">€ 49,99</p>
+                            <p class="text-purple-600 font-bold text-lg">€ 39,99</p>
+                        </div>
+                        <button onclick="addToCart('Azeite extra virgem 5Lt Premium', 39.99, 'images/azeite200.JPG')" class="bg-purple-100 text-purple-600 p-2 rounded-full hover:bg-purple-200">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                <div class="p-4">
+                    <img src="Azeitegalao.JPG" alt="Produto 2" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h5 class="font-bold text-gray-800 mb-1">Azeite extra virgem garafão 5Lt Premium</h5>
+                    <p class="text-gray-600 text-sm mb-2">Em galão, ideal para abartecer seus recipientes e galheteiros.</p>
+                    <div class="flex items-center mb-3">
+                        
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm line-through">€ 49,99</p>
+                            <p class="text-purple-600 font-bold text-lg">€ 39,99</p>
+                        </div>
+                        <button onclick="addToCart('Azeite extra virgem 5Lt Premium', 39.99, 'images/Azeitegalao.JPG')" class="bg-purple-100 text-purple-600 p-2 rounded-full hover:bg-purple-200">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                <div class="discount-badge bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">-10%</div>
+                <div class="p-4">
+                    <img src="azeitemovel.JPG" alt="Produto 3" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h5 class="font-bold text-gray-800 mb-1">Combo caixa + garrafão</h5>
+                    <p class="text-gray-600 text-sm mb-2">Combo Azeite extra virgem caixa 5Lt + garrafão 5Lt</p>
+                    <div class="flex items-center mb-3">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm line-through">
+                             € 79,99</p>
+                            <p class="text-purple-600 font-bold text-lg">€ 71,99</p>
+                        </div>
+                        <button onclick="addToCart('Combo 5Lt caixa + garrafão', 71.99, 'images/azeitemovel.JPG')" class="bg-purple-100 text-purple-600 p-2 rounded-full hover:bg-purple-200">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                <div class="p-4">
+                    <img src="Amêndoa.webp" alt="Produto 4" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h5 class="font-bold text-gray-800 mb-1">Amêndoa da terra</h5>
+                    <p class="text-gray-600 text-sm mb-2">Deliciosa amendoa com casca, preço a KG</p>
+                    <div class="flex items-center mb-3">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-purple-600 font-bold text-lg">€ 39,00</p>
+                        </div>
+                        <button onclick="addToCart('Amêndoa da terra', 39.99, 'images/Amêndoa.webp')" class="bg-purple-100 text-purple-600 p-2 rounded-full hover:bg-purple-200">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                <div class="discount-badge bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">-25%</div>
+                <div class="p-4">
+                    <img src="nozes.webp" alt="Produto 5" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h5 class="font-bold text-gray-800 mb-1">Nozes</h5>
+                    <p class="text-gray-600 text-sm mb-2">Produto com casca, preço a KG</p>
+                    <div class="flex items-center mb-3">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm line-through">€ 39,99</p>
+                            <p class="text-purple-600 font-bold text-lg">€ 29.99</p>
+                        </div>
+                        <button onclick="addToCart('Nozes da terra', 29.99, 'images/nozes.webp')" class="bg-purple-100 text-purple-600 p-2 rounded-full hover:bg-purple-200">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                <div class="discount-badge bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">-25%</div>
+                <div class="p-4">
+                    <img src="vinho artezanal.jpg" alt="Produto 5" class="w-full h-48 object-cover rounded-md mb-4">
+                    <h5 class="font-bold text-gray-800 mb-1">Vinho artezanal</h5>
+                    <p class="text-gray-600 text-sm mb-2">Produto feito pelas virgens do Freixo</p>
+                    <div class="flex items-center mb-3">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm line-through">€ 999,99</p>
+                            <p class="text-purple-600 font-bold text-lg">€ 899.99</p>
+                        </div>
+                        <button onclick="addToCart('Vinho artezanal', 899.99, 'images/vinho artezanal.JPG')" class="bg-purple-100 text-purple-600 p-2 rounded-full hover:bg-purple-200">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                </div>
+            </div>
+
+
+    </section>
+
+
+
+    <!-- Features Section -->
+    <section class="bg-gray-100 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="text-purple-600 text-3xl mb-4">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h5 class="font-bold text-gray-800 mb-2">Frete Grátis</h5>
+                    <p class="text-gray-600">Para compras acima de € 100 em territorio Portugues</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="text-purple-600 text-3xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h5 class="font-bold text-gray-800 mb-2">Garantia da qualidade</h5>
+                    <p class="text-gray-600">Todos os produtos com garantia </p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="text-purple-600 text-3xl mb-4">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h5 class="font-bold text-gray-800 mb-2">Parcelamento</h5>
+                    <p class="text-gray-600">Em até 3x sem juros no cartão de crédito</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Seção: O Azeite -->
+<section  id="azeite" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="md:flex">
+                <!-- Imagem do Azeite -->
+                <div class="md:w-1/2 h-[550px]">
+                    <img src="azeitemovel.JPG" class="object-cover h-full w-full" alt="Azeite Freixo de Espada à Cinta">
+                </div>
+
+                <!-- Conteúdo Textual -->
+                <div class="md:w-1/2 p-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">O azeite</h2>
+
+                    <div class="flex items-center text-gray-600 mb-6">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>Freixo de Espada à Cinta</span>
+                    </div>
+
+                    <p class="text-gray-700 mb-6">
+                        <strong>Azeite Extra Virgem</strong> feito com Amor e Tradição. Nosso azeite é produzido a partir de azeitonas colhidas das nossas próprias oliveiras, garantindo frescor e qualidade em cada gota. Cultivado com cuidado e paixão, nosso azeite oferece um sabor único e autêntico, perfeito para dar um toque especial em suas receitas.
+                    </p>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Por que escolher o nosso azeite?</h3>
+
+                    <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                        <li><strong>Produção própria:</strong> Colhido diretamente de nossas oliveiras.</li>
+                        <li><strong>Sabor único:</strong> Extraído com cuidado para manter suas qualidades naturais.</li>
+                        <li><strong>Feito com amor:</strong> Um produto genuíno, criado com dedicação e carinho.</li>
+                    </ul>
+
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Extra virgem</span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Baixa acidez</span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Extração a frio</span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Benefícios para a saúde</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Newsletter -->
+    <section class="bg-purple-600 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-4 text-white">Receba nossas ofertas exclusivas</h2>
+            <p class="mb-6 max-w-2xl mx-auto text-white">Cadastre-se e receba descontos especiais e novidades em primeira mão</p>
+            <div class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Seu melhor e-mail" class="flex-grow px-4 py-3 rounded-l-md focus:outline-none text-gray-800">
+                <button class="bg-purple-800 px-6 py-3 rounded-r-md hover:bg-purple-900">Cadastrar</button>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-bold text-xl mb-4 flex items-center text-white">
+                        <i class="fas fa-crown mr-2"></i> LAI Store
+                    </h3>
+                    <p class="text-gray-400">A melhor loja de produtos premium com qualidade excepcional e preços imbatíveis.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-white">Institucional</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Sobre Nós</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Nossas Lojas</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Trabalhe Conosco</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-white">Ajuda</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Central de Atendimento</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Perguntas Frequentes</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Trocas e Devoluções</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Status do Pedido</a></li>
+                    </ul>
+                </div>
+                <div id="contacto" >
+                    <h3 class="font-bold text-lg mb-4 text-white">Contato</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> Portugal</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone-alt mr-2"></i> xxxx-xxxx</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> contato@laistore.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p style="color: white; text-align: center;"> @2025 William Cruz.  Web Developer / Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</html>

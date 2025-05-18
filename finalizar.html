@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAI Store - Finalizar Compra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <a href="teste.html"></a>
+    <style>
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .cart-notification {
+            animation: bounce 0.5s;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        .checkout-step {
+            display: none;
+        }
+        .checkout-step.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .payment-method {
+            transition: all 0.3s;
+        }
+        .payment-method:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .payment-method.selected {
+            border-color: #8b5cf6;
+            background-color: #f3f0ff;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-crown text-purple-600 text-2xl"></i>
+                <h1 class="text-xl font-bold text-gray-800">LAI Store</h1>
+            </div>
+            
+            <div class="hidden md:flex space-x-6">
+                <a href="file:///C:/Users/formando.porto/Desktop/2%20site%20Lai/compras.html" class="text-gray-600 hover:text-purple-600">Home</a>
+                <a href="#" class="text-gray-600 hover:text-purple-600">Resumo de compras</a>
+                <a href="#morada" class="text-gray-600 hover:text-purple-600">Morada</a>
+                <a href="#step3" class="text-gray-600 hover:text-purple-600">Pagamento</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button id="cartButton" class="text-gray-600 hover:text-purple-600 relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </button>
+                </div>
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Checkout Progress -->
+    <div  class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex-1 flex items-center">
+                    <div class="flex items-center text-purple-600">
+                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center mr-2">
+                            1
+                        </div>
+                        <span class="hidden sm:inline">Endereço</span>
+                    </div>
+                    <div class="flex-1 h-1 mx-2 bg-purple-600"></div>
+                </div>
+                
+                <div class="flex-1 flex items-center">
+                    <div class="flex items-center text-purple-600">
+                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center mr-2">
+                            2
+                        </div>
+                        <span class="hidden sm:inline">Frete</span>
+                    </div>
+                    <div class="flex-1 h-1 mx-2 bg-purple-600"></div>
+                </div>
+                
+                <div class="flex-1 flex items-center">
+                    <div class="flex items-center text-purple-600">
+                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center mr-2">
+                            3
+                        </div>
+                        <span class="hidden sm:inline">Pagamento</span>
+                    </div>
+                    <div class="flex-1 h-1 mx-2 bg-gray-300"></div>
+                </div>
+                
+                <div class="flex items-center">
+                    <div class="flex items-center text-gray-400">
+                        <div class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mr-2">
+                            4
+                        </div>
+                        <span class="hidden sm:inline">Confirmação</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Content -->
+    <div id="Morada" class="container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Left Column - Form -->
+            <div class="lg:w-2/3">
+                <!-- Step 1: Address -->
+                <div id="step1" class="checkout-step active">
+                    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Endereço de Entrega</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-1">Codigo postal</label>
+                                <div class="flex">
+                                    <input type="text" id="cep" class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="00000-000">
+                                    <button onclick="buscarCEP()" class="bg-purple-600 text-white px-4 py-2 rounded-r-md hover:bg-purple-700">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-1">Rua</label>
+                                <input type="text" id="rua" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-1">Número</label>
+                                <input type="text" id="numero" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-1">Complemento</label>
+                                <input type="text" id="complemento" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-1">freguesia</label>
+                                <input type="text" id="bairro" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-1">Cidade</label>
+                                <input type="text" id="cidade" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-1">Pais</label>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-end">
+                            <button onclick="nextStep(2)" class="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Shipping -->
+                <div id="step2" class="checkout-step">
+                    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Opções de Frete</h2>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-md hover:border-purple-500 cursor-pointer shipping-option" data-price="15.90" data-days="3">
+                                <div class="flex items-center">
+                                    <div class="mr-4">
+                                        <i class="fas fa-truck text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Padrão</h3>
+                                        <p class="text-sm text-gray-600">Entrega em até 3 dias úteis</p>
+                                    </div>
+                                </div>
+                                <div class="text-purple-600 font-medium">R$ 15,90</div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-md hover:border-purple-500 cursor-pointer shipping-option" data-price="29.90" data-days="1">
+                                <div class="flex items-center">
+                                    <div class="mr-4">
+                                        <i class="fas fa-bolt text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Expressa</h3>
+                                        <p class="text-sm text-gray-600">Entrega no próximo dia útil</p>
+                                    </div>
+                                </div>
+                                <div class="text-purple-600 font-medium">R$ 29,90</div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-md hover:border-purple-500 cursor-pointer shipping-option" data-price="0" data-days="5">
+                                <div class="flex items-center">
+                                    <div class="mr-4">
+                                        <i class="fas fa-box-open text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Retirada na Loja</h3>
+                                        <p class="text-sm text-gray-600">Disponível em 5 dias úteis</p>
+                                    </div>
+                                </div>
+                                <div class="text-purple-600 font-medium">Grátis</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <button onclick="prevStep(1)" class="text-purple-600 px-6 py-2 rounded-md hover:bg-purple-50">Voltar</button>
+                            <button onclick="nextStep(3)" class="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Payment -->
+                <div id="step3" class="checkout-step">
+                    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Pagamento</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="payment-method p-4 border border-gray-200 rounded-md cursor-pointer" data-method="credit">
+                                <div class="flex items-center">
+                                    <div class="mr-4">
+                                        <i class="far fa-credit-card text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Cartão de Crédito</h3>
+                                        <p class="text-sm text-gray-600">Parcelamento em até 12x sem juros</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-method p-4 border border-gray-200 rounded-md cursor-pointer" data-method="debit">
+                                <div class="flex items-center">
+                                    <div class="mr-4">
+                                        <i class="fas fa-credit-card text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Cartão de Débito</h3>
+                                        <p class="text-sm text-gray-600">Desconto de 5% no valor total</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-method p-4 border border-gray-200 rounded-md cursor-pointer" data-method="pix">
+                                <div class="flex items-center">
+                                    <div class="mr-4">
+                                        <i class="fas fa-qrcode text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">PIX</h3>
+                                        <p class="text-sm text-gray-600">Desconto de 10% no valor total</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-method p-4 border border-gray-200 rounded-md cursor-pointer" data-method="boleto">
+                                <div class="flex items-center">
+                                    <div class="mr-4">
+                                        <i class="fas fa-barcode text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Boleto Bancário</h3>
+                                        <p class="text-sm text-gray-600">Desconto de 5% no valor total</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Credit Card Form (shown when credit card is selected) -->
+                        <div id="creditCardForm" class="hidden">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-1">Número do Cartão</label>
+                                    <input type="text" id="cardNumber" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="0000 0000 0000 0000">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-1">Nome no Cartão</label>
+                                    <input type="text" id="cardName" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Como no cartão">
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-1">Validade</label>
+                                    <input type="text" id="cardExpiry" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="MM/AA">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-1">CVV</label>
+                                    <input type="text" id="cardCvv" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="000">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-medium mb-1">Parcelas</label>
+                                    <select id="cardInstallments" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600">
+                                        <option value="1">1x de R$ 1.000,00 sem juros</option>
+                                        <option value="2">2x de R$ 500,00 sem juros</option>
+                                        <option value="3">3x de R$ 333,33 sem juros</option>
+                                        <option value="4">4x de R$ 250,00 sem juros</option>
+                                        <option value="5">5x de R$ 200,00 sem juros</option>
+                                        <option value="6">6x de R$ 166,67 sem juros</option>
+                                        <option value="7">7x de R$ 142,86 sem juros</option>
+                                        <option value="8">8x de R$ 125,00 sem juros</option>
+                                        <option value="9">9x de R$ 111,11 sem juros</option>
+                                        <option value="10">10x de R$ 100,00 sem juros</option>
+                                        <option value="11">11x de R$ 90,91 sem juros</option>
+                                        <option value="12">12x de R$ 83,33 sem juros</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pix Form (shown when pix is selected) -->
+                        <div id="pixForm" class="hidden text-center py-8">
+                            <div class="max-w-xs mx-auto mb-6">
+                                <div class="bg-gray-100 p-4 rounded-lg">
+                                    <img src="https://via.placeholder.com/200" alt="QR Code PIX" class="w-full h-auto">
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Escaneie o QR Code acima ou copie o código abaixo para pagar via PIX</p>
+                            <div class="flex items-center justify-center mb-6">
+                                <div class="bg-gray-100 px-4 py-2 rounded-md mr-2">
+                                    <code class="text-gray-800">00020126580014BR.GOV.BCB.PIX0136123e4567-e12b-12d1-a456-42665544000052040000530398654041.005802BR5925LAI STORE LTDA6009SAO PAULO61080540900062250521abc1234567890123456789016304A1B2</code>
+                                </div>
+                                <button class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <p class="text-sm text-gray-500">O pedido será confirmado automaticamente após a confirmação do pagamento</p>
+                        </div>
+                        
+                        <!-- Boleto Form (shown when boleto is selected) -->
+                        <div id="boletoForm" class="hidden text-center py-8">
+                            <div class="max-w-xs mx-auto mb-6">
+                                <i class="fas fa-barcode text-6xl text-gray-400 mb-4"></i>
+                                <p class="text-gray-600 mb-4">O boleto bancário será gerado após a confirmação do pedido</p>
+                                <p class="text-sm text-gray-500">Você receberá o boleto por e-mail e poderá pagar em qualquer agência bancária ou internet banking</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between mt-6">
+                            <button onclick="prevStep(2)" class="text-purple-600 px-6 py-2 rounded-md hover:bg-purple-50">Voltar</button>
+                            <button onclick="confirmOrder()" class="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700">Finalizar Pedido</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Confirmation -->
+                <div id="step4" class="checkout-step">
+                    <div class="bg-white rounded-lg shadow-sm p-6 mb-6 text-center">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-check text-green-600 text-3xl"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Pedido Confirmado!</h2>
+                        <p class="text-gray-600 mb-6">Obrigado por comprar na LAI Store. Seu pedido #123456 foi confirmado.</p>
+                        
+                        <div class="max-w-md mx-auto bg-gray-50 p-6 rounded-md mb-6">
+                            <h3 class="font-medium text-gray-800 mb-4">Resumo do Pedido</h3>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Subtotal:</span>
+                                <span class="font-medium">R$ 1.000,00</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Frete:</span>
+                                <span class="font-medium">R$ 15,90</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Desconto:</span>
+                                <span class="font-medium text-green-600">- R$ 50,00</span>
+                            </div>
+                            <div class="flex justify-between border-t border-gray-200 pt-3 mt-3">
+                                <span class="text-gray-800 font-bold">Total:</span>
+                                <span class="text-purple-600 font-bold">R$ 965,90</span>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-gray-50 p-4 rounded-md text-left">
+                                <h3 class="font-medium text-gray-800 mb-2">Endereço de Entrega</h3>
+                                <p class="text-gray-600">Rua das Flores, 123</p>
+                                <p class="text-gray-600">Complemento: Apt 101</p>
+                                <p class="text-gray-600">Bairro Jardins</p>
+                                <p class="text-gray-600">São Paulo/SP</p>
+                                <p class="text-gray-600">CEP: 01234-567</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-md text-left">
+                                <h3 class="font-medium text-gray-800 mb-2">Forma de Pagamento</h3>
+                                <p class="text-gray-600">Cartão de Crédito</p>
+                                <p class="text-gray-600">Mastercard **** **** **** 1234</p>
+                                <p class="text-gray-600">Parcelado em 3x de R$ 333,33</p>
+                                <p class="text-gray-600">Previsão de entrega: 3 dias úteis</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6">Você receberá um e-mail com todos os detalhes do seu pedido.</p>
+                        
+                        <button onclick="window.location.href='index.html'" class="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700">Voltar à Loja</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Order Summary -->
+            <div class="lg:w-1/3">
+                <div class="bg-white rounded-lg shadow-sm p-6 sticky top-4">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Resumo do Pedido</h2>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/80" alt="Produto" class="w-16 h-16 object-cover rounded-md mr-4">
+                            <div class="flex-grow">
+                                <h3 class="font-medium text-gray-800">Smartphone Premium</h3>
+                                <p class="text-sm text-gray-600">128GB, 8GB RAM</p>
+                            </div>
+                            <div class="text-gray-800">R$ 999,00</div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/80" alt="Produto" class="w-16 h-16 object-cover rounded-md mr-4">
+                            <div class="flex-grow">
+                                <h3 class="font-medium text-gray-800">Fones Bluetooth</h3>
+                                <p class="text-sm text-gray-600">Cancelamento de Ruído</p>
+                            </div>
+                            <div class="text-gray-800">R$ 764,15</div>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-200 pt-4 mb-4">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-600">Subtotal</span>
+                            <span class="font-medium">R$ 1.763,15</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-600">Frete</span>
+                            <span id="shippingCost" class="font-medium">-</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-600">Desconto</span>
+                            <span id="discountValue" class="font-medium text-green-600">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-gray-200 pt-4 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-800 font-bold">Total</span>
+                            <span id="orderTotal" class="text-purple-600 font-bold text-lg">R$ 1.763,15</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-purple-50 border border-purple-100 rounded-md p-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-gift text-purple-600 mt-1 mr-3"></i>
+                            <div>
+                                <h3 class="font-medium text-gray-800 mb-1">Cupom de Desconto</h3>
+                                <p class="text-sm text-gray-600 mb-2">Tem um cupom? Aplique agora e ganhe descontos!</p>
+                                <div class="flex">
+                                    <input type="text" id="couponCode" class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="Código do cupom">
+                                    <button onclick="applyCoupon()" class="bg-purple-600 text-white px-4 py-2 rounded-r-md hover:bg-purple-700">Aplicar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-bold text-xl mb-4 flex items-center">
+                        <i class="fas fa-crown mr-2"></i> LAI Store
+                    </h3>
+                    <p class="text-gray-400">A melhor loja de produtos premium com qualidade excepcional e preços imbatíveis.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Institucional</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Sobre Nós</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Nossas Lojas</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Trabalhe Conosco</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Ajuda</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Central de Atendimento</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Perguntas Frequentes</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Trocas e Devoluções</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Status do Pedido</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Contato</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> Av. Paulista, 1000 - São Paulo/SP</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone-alt mr-2"></i> (11) 4002-8922</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-2"></i> contato@laistore.com.br</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 LAI Store. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Current step in checkout process
+        let currentStep = 1;
+        let shippingPrice = 0;
+        let paymentMethod = '';
+        let discount = 0;
+        const subtotal = 1763.15;
+        
+        // Navigate between steps
+        function nextStep(step) {
+            // Validate current step before proceeding
+            if (currentStep === 1 && !validateAddress()) {
+                return;
+            }
+            if (currentStep === 2 && !validateShipping()) {
+                return;
+            }
+            
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep = step;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // Update progress indicator
+            updateProgressIndicator();
+        }
+        
+        function prevStep(step) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep = step;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // Update progress indicator
+            updateProgressIndicator();
+        }
+        
+        function updateProgressIndicator() {
+            // This would update the visual progress indicator at the top
+            // Implementation depends on your specific design
+        }
+        
+        // Validate address form
+        function validateAddress() {
+            const cep = document.getElementById('cep').value;
+            const rua = document.getElementById('rua').value;
+            const numero = document.getElementById('numero').value;
+            const cidade = document.getElementById('cidade').value;
+            const estado = document.getElementById('estado').value;
+            
+            if (!cep || !rua || !numero || !cidade || !estado) {
+                alert('Por favor, preencha todos os campos obrigatórios do endereço.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Validate shipping selection
+        function validateShipping() {
+            if (shippingPrice === 0 && !document.querySelector('.shipping-option.selected')) {
+                alert('Por favor, selecione uma opção de frete.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Select shipping option
+        document.querySelectorAll('.shipping-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.shipping-option').forEach(opt => {
+                    opt.classList.remove('selected', 'border-purple-500');
+                });
+                
+                this.classList.add('selected', 'border-purple-500');
+                shippingPrice = parseFloat(this.dataset.price);
+                
+                // Update order summary
+                updateOrderSummary();
+            });
+        });
+        
+        // Select payment method
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                document.querySelectorAll('.payment-method').forEach(m => {
+                    m.classList.remove('selected');
+                });
+                
+                this.classList.add('selected');
+                paymentMethod = this.dataset.method;
+                
+                // Show appropriate payment form
+                document.getElementById('creditCardForm').classList.add('hidden');
+                document.getElementById('pixForm').classList.add('hidden');
+                document.getElementById('boletoForm').classList.add('hidden');
+                
+                if (paymentMethod === 'credit') {
+                    document.getElementById('creditCardForm').classList.remove('hidden');
+                    // Apply different discount based on payment method
+                    discount = 0;
+                } else if (paymentMethod === 'debit') {
+                    discount = subtotal * 0.05;
+                } else if (paymentMethod === 'pix') {
+                    document.getElementById('pixForm').classList.remove('hidden');
+                    discount = subtotal * 0.10;
+                } else if (paymentMethod === 'boleto') {
+                    document.getElementById('boletoForm').classList.remove('hidden');
+                    discount = subtotal * 0.05;
+                }
+                
+                // Update order summary
+                updateOrderSummary();
+            });
+        });
+        
+        // Apply coupon
+        function applyCoupon() {
+            const couponCode = document.getElementById('couponCode').value;
+            
+            // Simulate coupon validation
+            if (couponCode.toUpperCase() === 'LAI10') {
+                discount += 50; // Additional discount
+                alert('Cupom aplicado com sucesso! Desconto adicional de R$ 50,00');
+            } else {
+                alert('Cupom inválido ou expirado.');
+            }
+            
+            // Update order summary
+            updateOrderSummary();
+        }
+        
+        // Update order summary
+        function updateOrderSummary() {
+            document.getElementById('shippingCost').textContent = shippingPrice === 0 ? 'Grátis' : `R$ ${shippingPrice.toFixed(2).replace('.', ',')}`;
+            document.getElementById('discountValue').textContent = discount > 0 ? `- R$ ${discount.toFixed(2).replace('.', ',')}` : '-';
+            
+            const total = subtotal + shippingPrice - discount;
+            document.getElementById('orderTotal').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+        
+        // Confirm order
+        function confirmOrder() {
+            if (paymentMethod === 'credit' && !validateCreditCard()) {
+                return;
+            }
+            
+            nextStep(4);
+        }
+        
+        // Validate credit card
+        function validateCreditCard() {
+            const cardNumber = document.getElementById('cardNumber').value;
+            const cardName = document.getElementById('cardName').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            const cardCvv = document.getElementById('cardCvv').value;
+            
+            if (!cardNumber || !cardName || !cardExpiry || !cardCvv) {
+                alert('Por favor, preencha todos os campos do cartão de crédito.');
+                return false;
+            }
+            
+            // Simple validation for demo purposes
+            if (cardNumber.replace(/\s/g, '').length !== 16) {
+                alert('Número do cartão inválido. Deve conter 16 dígitos.');
+                return false;
+            }
+            
+            if (cardCvv.length < 3) {
+                alert('CVV inválido. Deve conter 3 ou 4 dígitos.');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Simulate CEP lookup
+        function buscarCEP() {
+            const cep = document.getElementById('cep').value;
+            
+            // Simulate API call
+            setTimeout(() => {
+                if (cep === '01001000') { // Sample valid CEP
+                    document.getElementById('rua').value = 'Praça da Sé';
+                    document.getElementById('bairro').value = 'Sé';
+                    document.getElementById('cidade').value = 'São Paulo';
+                    document.getElementById('estado').value = 'SP';
+                } else {
+                    alert('CEP não encontrado. Por favor, preencha os campos manualmente.');
+                }
+            }, 500);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set first step as active
+            document.getElementById('step1').classList.add('active');
+            
+            // Format CEP input
+            document.getElementById('cep').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 5) {
+                    value = value.substring(0, 5) + '-' + value.substring(5, 8);
+                }
+                e.target.value = value;
+            });
+            
+            // Format card number
+            document.getElementById('cardNumber').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0) {
+                    value = value.match(/.{1,4}/g).join(' ');
+                }
+                e.target.value = value.substring(0, 19);
+            });
+            
+            // Format card expiry
+            document.getElementById('cardExpiry').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                e.target.value = value.substring(0, 5);
+            });
+        });
+    </script>
+</body>
+</html>
